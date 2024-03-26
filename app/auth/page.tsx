@@ -4,6 +4,8 @@ import logo from "../../public/images/logo.png";
 import Input from "../components/Input";
 import axios from "axios";
 import { signIn } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 const Page = () => {
   const [name, setName] = useState("");
@@ -18,7 +20,7 @@ const Page = () => {
   }, []);
   const register = useCallback(async () => {
     try {
-      await axios.post("/api/auth", {
+      await axios.post("/api/register", {
         email,
         name,
         password,
@@ -33,7 +35,7 @@ const Page = () => {
       await signIn("credentials", {
         email,
         password,
-        redirect: false,
+        redirect: true,
         callbackUrl: "/",
       });
     } catch (error) {
@@ -89,7 +91,21 @@ const Page = () => {
             >
               {variant === "signin" ? "Login" : "Signup"}
             </button>
-            <p className="text-neutral-500  mt-12">
+            <div className="flex flex-row items-center mt-8 gap-4 justify-center">
+              <div
+                onClick={() => signIn("google", { callbackUrl: "/" })}
+                className="w-10 h-10 bg-white rounded-full flex justify-center items-center cursor-pointer hover:opacity-80 transition"
+              >
+                <FcGoogle size={30} />
+              </div>
+              <div
+                onClick={() => signIn("github", { callbackUrl: "/" })}
+                className="w-10 h-10 bg-white rounded-full flex justify-center items-center cursor-pointer hover:opacity-80 transition"
+              >
+                <FaGithub size={30} />
+              </div>
+            </div>
+            <p className="text-neutral-500  mt-8">
               {variant === "signin"
                 ? "First time using Netflix?"
                 : "Already have an account?"}
