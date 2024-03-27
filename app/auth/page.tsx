@@ -35,7 +35,7 @@ const Page = () => {
       await signIn("credentials", {
         email,
         password,
-        redirect: true,
+        redirect: false,
         callbackUrl: "/",
       });
     } catch (error) {
